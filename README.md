@@ -126,20 +126,28 @@ If your backend uses vendor_name instead of vendor, adjust the frontend mapping.
 Backend
 
 cd backend
+
 cp .env.example .env
+
 npm install
+
 npm run start:dev
-# API at http://localhost:3000
+
+-- API at http://localhost:3000
 
 
 Frontend
 
 cd frontend
+
 cp .env.example .env
-# set VITE_API_BASE_URL=http://localhost:3000
+
+-- set VITE_API_BASE_URL=http://localhost:3000
+
 npm install
+
 npm run dev
-# App at http://localhost:5173
+-- App at http://localhost:5173
 
 ------
 
