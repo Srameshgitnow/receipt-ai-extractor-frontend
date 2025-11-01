@@ -21,7 +21,7 @@ Upload a receipt image and extract details.
 - Field: `file` (accepts .jpg/.jpeg/.png)
 
 **Response:**
-```json
+
 {
   "vendor": "Starbucks",
   "date": "2024-12-10",
