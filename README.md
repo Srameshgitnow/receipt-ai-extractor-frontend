@@ -53,16 +53,22 @@ Tailwind CSS or your preferred UI library (optional)
 ⚙️ Setup
 
 git clone https://github.com/<your-username>/receipt-ai-extractor-frontend.git
+
 cd receipt-ai-extractor-frontend
+
 npm install
+
 cp .env.example .env
+
 npm run dev
 
 
 .env
 
 VITE_API_BASE_URL=http://localhost:3000
-# Toggle client-side OCR in UI if you add it:
+
+-- Toggle client-side OCR in UI if you add it:
+
 VITE_ENABLE_CLIENT_OCR=false
 
 ------
@@ -100,7 +106,7 @@ A full-stack project for extracting structured data from **receipt images**.
 - `multipart/form-data` with field `file` (accepts `.jpg/.jpeg/.png`)
 
 **Response**
-```json
+
 {
   "vendor": "Starbucks",
   "date": "2024-12-10",
