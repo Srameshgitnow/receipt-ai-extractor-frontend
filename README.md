@@ -1,39 +1,167 @@
-# Engineering Assessment Frontend (React)
 
-## Project Initialization
+# 🧾 Receipt AI Extractor – Frontend
 
-1. Clone this repository locally
+A React (Vite + TypeScript) web UI that lets you **upload receipt images**, optionally run **client-side OCR** (Tesseract.js/PaddleOCR), and call a backend **REST API** to extract structured receipt details.
 
-2. Create a new working branch (e.g. `git checkout -b working-branch`)
 
-3. Set your node environment
+## Features Implemented
 
-   - Run `nvm install && nvm use`, or
+- Upload receipt images via REST API (`/extract-receipt-details`)
+- Receipt data extraction using an open-source OCR engine (Tesseract.js or PaddleOCR)
+- Extracted fields: Vendor Name, Date, Currency, Items (Name & Cost), Tax, Total
+- Input validation and error handling implemented
 
-   - Alternatively manually set your node to v18+ and npm to v10+
+## API Endpoints
 
-4. Run `npm install` to install dependencies
+### POST /extract-receipt-details
+Upload a receipt image and extract details.
 
-   Note: Ensure you have properly set your node version before this step
+**Request:**
+- Content-Type: multipart/form-data
+- Field: `file` (accepts .jpg/.jpeg/.png)
 
-5. Run `npm run dev` to spin-up the frontend
+**Response:**
+```json
+{
+  "vendor": "Starbucks",
+  "date": "2024-12-10",
+  "currency": "GBP",
+  "items": [
+    {"name": "Latte", "cost": 3.5},
+    {"name": "Bagel", "cost": 2.5}
+  ],
+  "tax": 0.8,
+  "total": 6.8
+}
 
-   The terminal should display the port to view the frontend application in your browser (e.g. `http://localhost:5173/`).
+-----
 
-   You can check that the frontend is running correctly by opening the provided url in your browser, where you should see a simple "Hello World" landing page.
+🧰 Tech Stack
 
-## Project Work
 
-1. Complete all of your work in the working branch that you created above
+React + Vite + TypeScript
 
-2. Push commits to your remote working branch as often as you need
+Axios (API calls)
 
-## Project Submission
+Tesseract.js / PaddleOCR (optional client-side OCR)
 
-When you are ready to submit your work:
+Tailwind CSS or your preferred UI library (optional)
 
-1. Create a PR into `main` branch
 
-2. Merge the above PR
+-----
 
-**⚠️ IMPORTANT: The above action is a one-time submission event. Do not open a PR until you are ready to submit your project.**
+⚙️ Setup
+
+git clone https://github.com/<your-username>/receipt-ai-extractor-frontend.git
+cd receipt-ai-extractor-frontend
+npm install
+cp .env.example .env
+npm run dev
+
+
+.env
+
+VITE_API_BASE_URL=http://localhost:3000
+# Toggle client-side OCR in UI if you add it:
+VITE_ENABLE_CLIENT_OCR=false
+
+------
+
+
+# 🧾 Receipt AI Extractor – Monorepo (Frontend + Backend)
+
+A full-stack project for extracting structured data from **receipt images**.
+
+- **Backend (NestJS)**: Accepts image uploads, runs OCR/AI (Tesseract.js), parses fields, persists results, exposes REST.
+- **Frontend (React + Vite)**: Uploads receipt images, shows extracted Vendor, Date, Currency, Items, Tax, Total.
+
+## Repos in this monorepo
+
+- `backend/` – NestJS REST API
+- `frontend/` – React UI (Vite + TypeScript)
+
+---
+
+## ✨ Features
+
+- Upload receipt images via **POST** `/extract-receipt-details`
+- OCR with **Tesseract.js** (or swap for PaddleOCR/Vision API)
+- Extracted fields:
+  - Vendor, Date, Currency, Items (Name & Cost), Tax, Total
+- Input validation + error handling
+- Persistence to `uploads/receipts.json` (demo storage)
+
+---
+
+## 🔌 API (backend)
+
+### POST `/extract-receipt-details`
+**Request**
+- `multipart/form-data` with field `file` (accepts `.jpg/.jpeg/.png`)
+
+**Response**
+```json
+{
+  "vendor": "Starbucks",
+  "date": "2024-12-10",
+  "currency": "GBP",
+  "items": [
+    {"name": "Latte", "cost": 3.5},
+    {"name": "Bagel", "cost": 2.5}
+  ],
+  "tax": 0.8,
+  "total": 6.8
+}
+If your backend uses vendor_name instead of vendor, adjust the frontend mapping.
+
+
+🧰 Local development (without Docker)
+
+Backend
+
+cd backend
+cp .env.example .env
+npm install
+npm run start:dev
+# API at http://localhost:3000
+
+
+Frontend
+
+cd frontend
+cp .env.example .env
+# set VITE_API_BASE_URL=http://localhost:3000
+npm install
+npm run dev
+# App at http://localhost:5173
+
+------
+
+🧪 Testing
+
+Backend
+
+cd backend
+npm run test
+npm run test:e2e
+
+
+(Frontend testing setup is optional; add Vitest/RTL if needed.)
+
+------
+
+
+🛡️ Notes
+
+uploads/ is generated at runtime (images + receipts.json) and is ignored by git.
+
+Tesseract models are downloaded on first run; the first OCR may be slower.
+
+For production use a real database (PostgreSQL + Prisma/TypeORM), file size limits, rate limiting, and auth.
+
+-----
+
+📄 License
+
+MIT
+
